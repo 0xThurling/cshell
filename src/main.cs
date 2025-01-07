@@ -10,11 +10,17 @@ while (true)
     {
         string[] commandArguments = userInput.Split(' ');
 
-        if (commandArguments[0].Equals("exit"))
+        switch (commandArguments[0])
         {
-            Environment.Exit(int.Parse(commandArguments.Last()));
+            case "exit":
+                Environment.Exit(int.Parse(commandArguments.Last()));
+                break;
+            case "echo":
+                Console.WriteLine(string.Join(' ', commandArguments[1..]));
+                break;
+            default:
+                Console.WriteLine($"{commandArguments[0]}: command not found");
+                break;
         }
-        
-        Console.WriteLine($"{userInput}: command not found");
     }
 }
