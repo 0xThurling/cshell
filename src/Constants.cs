@@ -11,6 +11,11 @@ public static class Constants
               {
                      Name = "exit",
                      Type = "builtin"
+              },
+              new()
+              {
+                     Name = "type",
+                     Type = "builtin"
               }
        };
 }
