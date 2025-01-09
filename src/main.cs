@@ -38,7 +38,7 @@ void HandleTypeCommand(string command)
     }
     else
     { 
-        Console.WriteLine($"{command}: command not found");
+        Console.WriteLine($"{command}: not found");
     }
 
 }
