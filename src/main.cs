@@ -30,15 +30,18 @@ while (true)
 
 void HandleTypeCommand(string command)
 {
-    if (Constants.Commands.Any(c => c.Name.Equals(command)))
+    if (Constants.Commands.Any(c => c.Name.Equals(command) && c.Type.Equals("builtin")))
     {
         Command selectedCommand = Constants.Commands.FirstOrDefault(c => c.Name.Equals(command));
         
         Console.WriteLine($"{selectedCommand.Name} is a shell {selectedCommand.Type}");
-    }
-    else
-    { 
+    } else if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PATH")))
+    {
+        string path = Environment.GetEnvironmentVariable("PATH")!;
+
+        string[] paths = path!.Split(':');
+        Console.WriteLine(paths.Length);
+    } else { 
         Console.WriteLine($"{command}: not found");
     }
-
 }
