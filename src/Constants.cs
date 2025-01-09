@@ -10,7 +10,7 @@ public static class Constants
               new()
               {
                      Name = "exit",
-                     Type = "shell"
+                     Type = "builtin"
               }
        };
 }
