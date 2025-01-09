@@ -1,4 +1,7 @@
 // Wait for user input
+
+using System.Diagnostics;
+
 while (true)
 {
     // Uncomment this line to pass the first stage
@@ -22,10 +25,51 @@ while (true)
                 HandleTypeCommand(commandArguments[1]);
                 break;
             default:
-                Console.WriteLine($"{commandArguments[0]}: command not found");
+                ExecuteProgram(commandArguments[0], commandArguments[1..]);
                 break;
         }
     }
+}
+
+void ExecuteProgram(string command, string[] args)
+{
+    string path = Environment.GetEnvironmentVariable("PATH")!;
+
+    string[] paths = path!.Split(':');
+    foreach (var p in paths)
+    {
+        string filePath = Path.Combine(p, command);
+        if (File.Exists(filePath))
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = filePath,
+                Arguments = string.Join(' ', args),
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using (Process process = new Process {StartInfo = startInfo})
+            {
+                process.Start();
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+                process.WaitForExit();
+                
+                Console.WriteLine(output);
+                if (!string.IsNullOrEmpty(error))
+                {
+                    Console.WriteLine(error);
+                }
+            }
+            
+            return;
+        }
+    }
+        
+    Console.WriteLine($"{command}: command not found");
 }
 
 void HandleTypeCommand(string command)
