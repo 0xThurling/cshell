@@ -41,9 +41,11 @@ void ExecuteProgram(string command, string[] args)
         string filePath = Path.Combine(p, command);
         if (File.Exists(filePath))
         {
+            string programName = Path.GetFileName(filePath);
+            
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
-                FileName = filePath,
+                FileName = programName,
                 Arguments = string.Join(' ', args),
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -58,10 +60,10 @@ void ExecuteProgram(string command, string[] args)
                 string error = process.StandardError.ReadToEnd();
                 process.WaitForExit();
                 
-                Console.WriteLine(output);
+                Console.Write(output);
                 if (!string.IsNullOrEmpty(error))
                 {
-                    Console.WriteLine(error);
+                    Console.Write(error);
                 }
             }
             
