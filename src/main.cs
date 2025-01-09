@@ -45,7 +45,7 @@ void HandleTypeCommand(string command)
             string filePath = Path.Combine(p, command);
             if (File.Exists(filePath))
             {
-                Console.WriteLine($"{command} is ${p}");
+                Console.WriteLine($"{command} is {filePath}");
                 return;
             }
         }
