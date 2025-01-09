@@ -40,8 +40,16 @@ void HandleTypeCommand(string command)
         string path = Environment.GetEnvironmentVariable("PATH")!;
 
         string[] paths = path!.Split(':');
-        Console.WriteLine(paths.Length);
-    } else { 
+        foreach (var p in paths)
+        {
+            string filePath = Path.Combine(p, command);
+            if (File.Exists(filePath))
+            {
+                Console.WriteLine($"{command} is ${p}");
+                return;
+            }
+        }
+        
         Console.WriteLine($"{command}: not found");
     }
 }
